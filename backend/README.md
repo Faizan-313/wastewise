@@ -12,6 +12,8 @@ npm run dev
 
 The development command uses Nodemon to restart the TypeScript server when source files change.
 
+Set `MONGODB_URI` and `GEMINI_API_KEY` in the environment before starting the API. The server waits for MongoDB to connect before it begins listening.
+
 The service listens on `0.0.0.0:$PORT` (default `3000`). `GET /health/live` reports process liveness, `GET /health/ready` reports that the API can accept requests, and `GET /` identifies the service. Readiness currently has no external dependency checks.
 
 Set `CORS_ORIGINS` to a comma-separated list of allowed origins, or `*` to allow any origin. Set `LOG_LEVEL` to a Pino level. Production deployments should set `NODE_ENV=production` and configure allowed origins explicitly.

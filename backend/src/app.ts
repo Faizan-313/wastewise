@@ -4,7 +4,9 @@ import helmet from "helmet";
 
 import { errorHandler } from "./middleware/error-handler.js";
 import { HttpError } from "./lib/http-error.js";
-import { healthRouter } from "./routes/health.js";
+import { connectRedis } from "./config/redis.config.js";
+
+import conversationRoutes from "./routes/chat.routes.js";
 
 export const app = express();
 
@@ -18,16 +20,21 @@ app.use(
   }),
 );
 
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json());
+
+connectRedis();
 
 app.get("/", (_request, response) => {
   response.status(200).json({ service: "wastewise-api", status: "ok" });
 });
 
-app.use("/health", healthRouter);
+app.use("/api/conversation", conversationRoutes);
 
+
+//@desc    Catch all unhandled routes
 app.use((_request, _response, next) => {
-  next(new HttpError(404, "NOT_FOUND", "Route not found"));
+  const error = new HttpError(404, "NOT_FOUND", "Route not found");
+  next(error);
 });
 
 app.use(errorHandler);
