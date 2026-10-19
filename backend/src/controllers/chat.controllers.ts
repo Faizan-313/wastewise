@@ -97,7 +97,7 @@ const analyzeItem: RequestHandler = async (req, res, next) => {
             analysis: aiResponse.text,
         });
     } catch (error) {
-        return next(error);
+        return next(new HttpError(500, "INTERNAL_SERVER_ERROR", "An error occurred while processing the chat request"));
     }
 };
 
@@ -140,7 +140,7 @@ const chatController: RequestHandler = async (req, res, next) => {
             analysis: aiResponse.text,
         });
     } catch (error) {
-        return next(error);
+        return next(new HttpError(500, "INTERNAL_SERVER_ERROR", "An error occurred while processing the chat request"));
     }
 };
 

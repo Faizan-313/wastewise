@@ -7,6 +7,7 @@ import { HttpError } from "./lib/http-error.js";
 import { connectRedis } from "./config/redis.config.js";
 
 import conversationRoutes from "./routes/chat.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 export const app = express();
 
@@ -29,6 +30,7 @@ app.get("/", (_request, response) => {
 });
 
 app.use("/api/conversation", conversationRoutes);
+app.use("/api/auth", authRoutes);
 
 
 //@desc    Catch all unhandled routes
